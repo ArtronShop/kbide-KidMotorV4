@@ -1,0 +1,15 @@
+{
+  "name": "KidMotorV3",
+  "title" : "KidMotorV3",
+  "keywords": "motor, esp32",
+  "description": "KidMotor V3 plugin for KBIDE",
+  "category":"Signal Input/Output",
+  "license": "MIT",
+  "git": "https://github.com/ioxhop/kbide-KidMotorV3/",
+  "author": "IOXhop.com",
+  "email": "sonthaya.nt@hotmail.com",
+  "url": "https://github.com/ioxhop/kbide-KidMotorV3.git",
+  "version": "1.0.0",
+  "platform": ["arduino-esp32"],
+  "image" : "/static/display.jpg"
+}
