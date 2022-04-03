@@ -1,3 +1,5 @@
+const KIDMOTOR_CLASS_NAME = "kidMotor";
+
 const KIDMOTOR_CODE_INIT = () => {
 	var WIRE_OBJ = 'Wire';
 	var SDA_PIN = 21, SCL_PIN = 22; 
@@ -12,14 +14,14 @@ const KIDMOTOR_CODE_INIT = () => {
 	}
 
 	var code = '';
-	code += '#EXTINC #include <KidMotorV3.h> #END\n';
+	code += '#EXTINC #include <KidMotorV4.h> #END\n';
 	code += '#EXTINC #include <Wire.h> #END\n';
-	code += `#EXTINC KidMotorV3 motor(&${WIRE_OBJ}); #END\n`;
+	code += `#EXTINC KidMotorV4 ${KIDMOTOR_CLASS_NAME}(&${WIRE_OBJ}); #END\n`;
 	code += `#SETUP ${WIRE_OBJ}.begin(${SDA_PIN}, ${SCL_PIN}); #END\n`;
 	return code;
 };
 
-const KIDMOTOR_BEGIN = `${KIDMOTOR_CODE_INIT()}motor`;
+const KIDMOTOR_BEGIN = `${KIDMOTOR_CODE_INIT()}${KIDMOTOR_CLASS_NAME}`;
 const KIDMOTOR_GEN_SET_MOTOR = (ch, dir, speed) => `${KIDMOTOR_BEGIN}.setMotor(${ch}, ${dir}, ${speed});`;
 const KIDMOTOR_GEN_DELAY = (t) => `vTaskDelay((${t} * 1000) / portTICK_RATE_MS);`;
 const KIDMOTOR_GEN_SET_MOTOR_STOP = () => `${KIDMOTOR_GEN_SET_MOTOR(1, 0, 0)} ${KIDMOTOR_GEN_SET_MOTOR(2, 0, 0)}`;
@@ -36,7 +38,7 @@ Blockly.JavaScript['kidmotor_motor'] = function(block) {
 Blockly.JavaScript['kidmotor_digital_read'] = function(block) {
   var dropdown_pin = block.getFieldValue('pin');
   
-	var code = `${KIDMOTOR_BEGIN}.getInput(${dropdown_pin})`;
+	var code = `${KIDMOTOR_BEGIN}.digitalRead(${dropdown_pin})`;
 	return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
@@ -44,14 +46,14 @@ Blockly.JavaScript['kidmotor_digital_write'] = function(block) {
 	var dropdown_pin = block.getFieldValue('pin');
   var value_value = Blockly.JavaScript.valueToCode(block, 'value', Blockly.JavaScript.ORDER_ATOMIC) || "0";
   
-	var code = `${KIDMOTOR_BEGIN}.setOutput(${dropdown_pin}, ${value_value});\n`;
+	var code = `${KIDMOTOR_BEGIN}.digitalWrite(${dropdown_pin}, ${value_value});\n`;
 	return code;
 };
 
 Blockly.JavaScript['kidmotor_analog_read'] = function(block) {
   var dropdown_pin = block.getFieldValue('pin');
   
-	var code = `${KIDMOTOR_BEGIN}.getADC(${dropdown_pin})`;
+	var code = `${KIDMOTOR_BEGIN}.analogRead(${dropdown_pin})`;
 	return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
@@ -113,3 +115,36 @@ Blockly.JavaScript['kidmotor_motor_stop'] = function(block) {
   var code = `${KIDMOTOR_GEN_SET_MOTOR_STOP()}\n`;
   return code;
 };
+
+Blockly.JavaScript['kidmotor_servo_set_angle'] = function(block) {
+	var dropdown_pin = block.getFieldValue('pin');
+  var value_value = Blockly.JavaScript.valueToCode(block, 'value', Blockly.JavaScript.ORDER_ATOMIC) || "0";
+  
+	var code = `${KIDMOTOR_BEGIN}.servoAngle(${dropdown_pin}, ${value_value});\n`;
+	return code;
+};
+
+Blockly.JavaScript['kidmotor_servo_unlock'] = function(block) {
+	var dropdown_pin = block.getFieldValue('pin');
+  
+	var code = `${KIDMOTOR_BEGIN}.servoUnlock(${dropdown_pin});\n`;
+	return code;
+};
+
+Blockly.JavaScript['kidmotor_pwm_write'] = function(block) {
+	var dropdown_pin = block.getFieldValue('pin');
+  var value_value = Blockly.JavaScript.valueToCode(block, 'value', Blockly.JavaScript.ORDER_ATOMIC) || "0";
+  
+	var code = `${KIDMOTOR_BEGIN}.analogWrite(${dropdown_pin}, ${value_value});\n`;
+	return code;
+};
+
+Blockly.JavaScript['kidmotor_get_distance'] = function(block) {
+	var dropdown_pin_trig = block.getFieldValue('pin_trig');
+  var dropdown_pin_echo = block.getFieldValue('pin_echo');
+
+	var code = `${KIDMOTOR_BEGIN}.distance(${dropdown_pin_trig}, ${dropdown_pin_echo})`;
+	return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+

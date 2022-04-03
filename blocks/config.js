@@ -1,6 +1,6 @@
 module.exports = [
 	{
-		name : "KidMotor V3",
+		name : "KidMotor V4",
 		blocks : [ 
             "kidmotor_motor_forward",
             "kidmotor_motor_backward",
@@ -22,6 +22,18 @@ module.exports = [
             },
             {
                 xml: `
+                    <block type="kidmotor_servo_set_angle">
+                        <value name="value">
+                            <shadow type="math_number">
+                                <field name="VALUE">90</field>
+                            </shadow>
+                        </value>
+                    </block>
+                `
+            },
+            "kidmotor_servo_unlock",
+            {
+                xml: `
                     <block type="kidmotor_digital_write">
                         <value name="value">
                             <shadow type="math_number">
@@ -32,7 +44,19 @@ module.exports = [
                 `
             },
             "kidmotor_digital_read",
-            "kidmotor_analog_read"
+            "kidmotor_analog_read",
+            {
+                xml: `
+                    <block type="kidmotor_pwm_write">
+                        <value name="value">
+                            <shadow type="math_number">
+                                <field name="VALUE">1</field>
+                            </shadow>
+                        </value>
+                    </block>
+                `
+            },
+            "kidmotor_get_distance",
 		]
 	}	
 ];
