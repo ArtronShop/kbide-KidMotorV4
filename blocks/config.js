@@ -14,7 +14,7 @@ module.exports = [
                     <block type="kidmotor_motor">
                         <value name="value">
                             <shadow type="math_number">
-                                <field name="VALUE">100</field>
+                                <field name="NUM">100</field>
                             </shadow>
                         </value>
                     </block>
@@ -25,7 +25,7 @@ module.exports = [
                     <block type="kidmotor_servo_set_angle">
                         <value name="value">
                             <shadow type="math_number">
-                                <field name="VALUE">90</field>
+                                <field name="NUM">90</field>
                             </shadow>
                         </value>
                     </block>
@@ -37,7 +37,7 @@ module.exports = [
                     <block type="kidmotor_digital_write">
                         <value name="value">
                             <shadow type="math_number">
-                                <field name="VALUE">1</field>
+                                <field name="NUM">1</field>
                             </shadow>
                         </value>
                     </block>
@@ -50,7 +50,7 @@ module.exports = [
                     <block type="kidmotor_pwm_write">
                         <value name="value">
                             <shadow type="math_number">
-                                <field name="VALUE">1</field>
+                                <field name="NUM">1</field>
                             </shadow>
                         </value>
                     </block>
